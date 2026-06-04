@@ -271,6 +271,10 @@ def cp_label(cp: int) -> str:
     return chr(cp)
 
 
+def embeddable_characters(codepoints: list[int]) -> str:
+    return "".join(chr(cp) for cp in codepoints if cp >= 0x20 and cp != 0x7F)
+
+
 def content_of(f: Font, metrics: dict | None) -> str:
     if f.script != "latin":
         return f.script
@@ -381,6 +385,7 @@ def render_index(fonts: list[Font], metrics: dict, coverage: dict, flash: dict, 
 
 def render_detail(f: Font, metrics: dict, cov: dict, flash: int | None, version: str) -> None:
     cps = cov.get("codepoints", [])
+    copy_text = embeddable_characters(cps)
     grouped: dict[str, list[int]] = {}
     for cp in cps:
         grouped.setdefault(block_name(cp), []).append(cp)
@@ -417,18 +422,43 @@ def render_detail(f: Font, metrics: dict, cov: dict, flash: int | None, version:
   <table><tbody>{''.join(block_rows) if block_rows else '<tr><td>Coverage has not been generated yet.</td><td></td></tr>'}</tbody></table>
 </section>
 <section>
+  <h2>Copy Characters</h2>
+  <p class="note">Characters suitable for custom-font generation. Control characters are omitted.</p>
+  <textarea id="copy-chars" readonly>{html.escape(copy_text)}</textarea>
+  <p><button id="copy-button" type="button">Copy characters</button><span id="copy-status" class="copy-status" aria-live="polite"></span></p>
+</section>
+<section>
   <h2>Covered Characters</h2>
   <p class="note">Use browser find to search this page. Control and space characters are shown as labels.</p>
   {''.join(char_sections) if char_sections else '<p class="note">Run the host probe to generate the full character listing.</p>'}
 </section>
-</main>"""
+</main>
+<script>
+(() => {{
+  const button = document.getElementById('copy-button');
+  const text = document.getElementById('copy-chars');
+  const status = document.getElementById('copy-status');
+  if (!button || !text) return;
+  button.addEventListener('click', async () => {{
+    text.focus();
+    text.select();
+    try {{
+      await navigator.clipboard.writeText(text.value);
+      status.textContent = 'Copied';
+    }} catch {{
+      document.execCommand('copy');
+      status.textContent = 'Selected';
+    }}
+  }});
+}})();
+</script>"""
     out = DOCS / "fonts"
     out.mkdir(parents=True, exist_ok=True)
     (out / f"{f.name}.html").write_text(page_shell(f"{f.name} - LGFXFontCatalog", body, version, asset_prefix="../"))
 
 
 def write_static_assets() -> None:
-    (DOCS / "styles.css").write_text("""*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;color:#1f2937;background:#f7f7f4}main{max-width:1180px;margin:0 auto;padding:24px}header{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}h1{font-size:28px;margin:0}h2{font-size:18px;margin:28px 0 10px}input,select{height:36px;border:1px solid #c9c9c2;border-radius:6px;background:white;padding:0 10px}#q{min-width:min(460px,100%)}.toolbar{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}.count{color:#667085}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.font-card{display:block;text-decoration:none;color:inherit;background:white;border:1px solid #ddded6;border-radius:8px;padding:10px;min-height:122px}.font-card:hover{border-color:#3b82f6}.preview{height:44px;display:flex;align-items:center;overflow:hidden;background:#111;margin:-2px -2px 8px;border-radius:5px;padding:4px;color:white}.preview img{max-width:100%;height:auto;image-rendering:auto}.preview span{font-size:20px;white-space:nowrap}.font-card strong{display:block;font-size:16px;line-height:1.2;font-weight:750;overflow-wrap:anywhere}.font-card small{display:block;color:#667085;margin-top:6px}.notice{margin-top:36px;border-top:1px solid #ddded6;padding-top:18px;color:#667085}.notice h2{color:#1f2937}.notice p{max-width:760px}.detail header{display:block}.detail table{border-collapse:collapse;background:white;border:1px solid #ddded6}.detail td{border-bottom:1px solid #e8e8e2;padding:7px 10px}.specimen{display:block;max-width:100%;background:#111;border-radius:6px;padding:8px;margin:16px 0}.fallback-specimen{font-size:28px;background:white;border:1px solid #ddded6;border-radius:6px;padding:16px;margin:16px 0}.note{color:#667085}.chars{display:flex;flex-wrap:wrap;gap:5px}.glyph{display:inline-flex;gap:4px;align-items:baseline;border:1px solid #e0e0da;background:white;border-radius:5px;padding:3px 5px}.glyph small{color:#667085;font-size:10px}footer{max-width:1180px;margin:0 auto;padding:24px;color:#667085}""")
+    (DOCS / "styles.css").write_text("""*{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,sans-serif;color:#1f2937;background:#f7f7f4}main{max-width:1180px;margin:0 auto;padding:24px}header{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}h1{font-size:28px;margin:0}h2{font-size:18px;margin:28px 0 10px}input,select{height:36px;border:1px solid #c9c9c2;border-radius:6px;background:white;padding:0 10px}button{height:34px;border:1px solid #b9bab2;border-radius:6px;background:white;padding:0 12px;cursor:pointer}button:hover{border-color:#3b82f6}#q{min-width:min(460px,100%)}.toolbar{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}.count{color:#667085}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.font-card{display:block;text-decoration:none;color:inherit;background:white;border:1px solid #ddded6;border-radius:8px;padding:10px;min-height:122px}.font-card[hidden]{display:none}.font-card:hover{border-color:#3b82f6}.preview{height:56px;display:flex;align-items:center;overflow:hidden;background:#111;margin:-2px -2px 8px;border-radius:5px;padding:4px;color:white}.preview img{max-height:100%;width:auto;max-width:none;image-rendering:auto}.preview span{font-size:20px;white-space:nowrap}.font-card strong{display:block;font-size:16px;line-height:1.2;font-weight:750;overflow-wrap:anywhere}.font-card small{display:block;color:#667085;margin-top:6px}.notice{margin-top:36px;border-top:1px solid #ddded6;padding-top:18px;color:#667085}.notice h2{color:#1f2937}.notice p{max-width:760px}.detail header{display:block}.detail table{border-collapse:collapse;background:white;border:1px solid #ddded6}.detail td{border-bottom:1px solid #e8e8e2;padding:7px 10px}.detail td:last-child{text-align:right;font-variant-numeric:tabular-nums}.specimen{display:block;max-width:100%;background:#111;border-radius:6px;padding:8px;margin:16px 0}.fallback-specimen{font-size:28px;background:white;border:1px solid #ddded6;border-radius:6px;padding:16px;margin:16px 0}.note{color:#667085}#copy-chars{display:block;width:100%;min-height:120px;resize:vertical;border:1px solid #ddded6;border-radius:6px;background:white;padding:10px;font:16px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.copy-status{margin-left:10px;color:#667085}.chars{display:flex;flex-wrap:wrap;gap:5px}.glyph{display:inline-flex;gap:4px;align-items:baseline;border:1px solid #e0e0da;background:white;border-radius:5px;padding:3px 5px}.glyph small{color:#667085;font-size:10px}footer{max-width:1180px;margin:0 auto;padding:24px;color:#667085}""")
     (DOCS / "app.js").write_text("""const q=document.querySelector('#q'),content=document.querySelector('#content'),bucket=document.querySelector('#bucket'),cards=[...document.querySelectorAll('.font-card')],count=document.querySelector('#count');function apply(){const query=(q.value||'').toLowerCase();let n=0;for(const c of cards){const ok=(!query||c.dataset.name.includes(query)||c.dataset.family.includes(query))&&(!content.value||c.dataset.content===content.value)&&(!bucket.value||c.dataset.bucket===bucket.value);c.hidden=!ok;if(ok)n++;}count.textContent=`${n} fonts`;}for(const el of [q,content,bucket])el.addEventListener('input',apply);apply();""")
 
 

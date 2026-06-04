@@ -154,13 +154,14 @@ void setup()
     bool letters = drawsText(font, "ABC");
     bool digits = drawsText(font, "0123456789");
     const char *brief = (!letters && digits) ? "0123456789" : e.brief;
+    const char *rich = (!letters && digits) ? "0123456789 12:34:56 -." : e.rich;
 
     char briefPath[180];
     char richPath[180];
     snprintf(briefPath, sizeof(briefPath), "output/assets/%s-brief.png", e.name);
     snprintf(richPath, sizeof(richPath), "output/assets/%s-rich.png", e.name);
     renderSample(font, brief, briefPath, m);
-    renderSample(font, e.rich, richPath, m);
+    renderSample(font, rich, richPath, m);
 
     int mono = detectMono(font, m);
     const char *monoStr = mono == 1 ? "true" : mono == 0 ? "false" : "null";
