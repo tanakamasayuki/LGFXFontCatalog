@@ -1,0 +1,8 @@
+LGFXFontCatalog displays metadata and rendered previews derived from preset
+fonts bundled with LovyanGFX.
+
+LovyanGFX:
+https://github.com/lovyan03/LovyanGFX
+
+The generated preview PNGs are rendered samples. This project does not
+redistribute LovyanGFX font binary data.

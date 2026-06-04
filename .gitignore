@@ -1,0 +1,5 @@
+.venv/
+__pycache__/
+.pytest_cache/
+generator/font_catalog_probe/build/
+generator/font_catalog_probe/output/

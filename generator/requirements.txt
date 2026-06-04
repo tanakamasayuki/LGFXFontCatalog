@@ -1,0 +1,6 @@
+Pillow>=10.0
+pytest>=8.0
+pytest-embedded>=2.0
+pytest-embedded-arduino>=1.0
+pytest-embedded-serial>=2.0
+pytest-embedded-arduino-cli>=1.1
