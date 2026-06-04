@@ -105,6 +105,22 @@ static bool savePngCrop(const char *path, int w, int h)
   return ok;
 }
 
+static void renderedBounds(int *w, int *h)
+{
+  int maxx = -1;
+  int maxy = -1;
+  for (int y = 0; y < kCanvasH; ++y) {
+    for (int x = 0; x < kCanvasW; ++x) {
+      if (canvas.readPixel(x, y)) {
+        if (x > maxx) maxx = x;
+        if (y > maxy) maxy = y;
+      }
+    }
+  }
+  *w = maxx >= 0 ? maxx + 3 : 1;
+  *h = maxy >= 0 ? maxy + 3 : 1;
+}
+
 static int lineCount(const char *s)
 {
   int n = 1;
@@ -145,6 +161,10 @@ static void renderSample(const IFont *font, const char *sample, const char *path
   int tw = maxLineWidth(sample) + 2;
   int lineH = m.height > 0 ? m.height : canvas.fontHeight();
   int th = lineH * lineCount(sample) + 2;
+  int rw, rh;
+  renderedBounds(&rw, &rh);
+  if (rw > tw) tw = rw;
+  if (rh > th) th = rh;
   savePngCrop(path, tw, th);
 }
 
