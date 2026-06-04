@@ -11,8 +11,8 @@ using lgfx::v1::FontMetrics;
 using lgfx::v1::IFont;
 
 static LGFX_Sprite canvas;
-static const int kCanvasW = 760;
-static const int kCanvasH = 160;
+static const int kCanvasW = 1280;
+static const int kCanvasH = 360;
 
 static int utf8(char *out, uint32_t cp)
 {
@@ -105,6 +105,35 @@ static bool savePngCrop(const char *path, int w, int h)
   return ok;
 }
 
+static int lineCount(const char *s)
+{
+  int n = 1;
+  for (const char *p = s; *p; ++p) {
+    if (*p == '\n') ++n;
+  }
+  return n;
+}
+
+static int maxLineWidth(const char *s)
+{
+  int maxw = 0;
+  const char *start = s;
+  char line[256];
+  for (const char *p = s; ; ++p) {
+    if (*p == '\n' || *p == '\0') {
+      size_t len = (size_t)(p - start);
+      if (len >= sizeof(line)) len = sizeof(line) - 1;
+      memcpy(line, start, len);
+      line[len] = 0;
+      int w = canvas.textWidth(line);
+      if (w > maxw) maxw = w;
+      if (*p == '\0') break;
+      start = p + 1;
+    }
+  }
+  return maxw;
+}
+
 static void renderSample(const IFont *font, const char *sample, const char *path, const FontMetrics &m)
 {
   canvas.fillScreen(TFT_BLACK);
@@ -113,8 +142,9 @@ static void renderSample(const IFont *font, const char *sample, const char *path
   canvas.setTextSize(1);
   canvas.setCursor(0, 0);
   canvas.print(sample);
-  int tw = canvas.textWidth(sample) + 2;
-  int th = m.height > 0 ? m.height + 2 : canvas.fontHeight() + 2;
+  int tw = maxLineWidth(sample) + 2;
+  int lineH = m.height > 0 ? m.height : canvas.fontHeight();
+  int th = lineH * lineCount(sample) + 2;
   savePngCrop(path, tw, th);
 }
 
@@ -154,7 +184,7 @@ void setup()
     bool letters = drawsText(font, "ABC");
     bool digits = drawsText(font, "0123456789");
     const char *brief = (!letters && digits) ? "0123456789" : e.brief;
-    const char *rich = (!letters && digits) ? "0123456789 12:34:56 -." : e.rich;
+    const char *rich = (!letters && digits) ? "0123456789\n12:34:56\n-." : e.rich;
 
     char briefPath[180];
     char richPath[180];
