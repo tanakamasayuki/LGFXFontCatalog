@@ -25,6 +25,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y binutils libsdl2-dev
       - name: Install arduino-cli
         uses: arduino/setup-arduino-cli@v2
+        with:
+          version: 1.4.0
       - name: Download pinned Arduino libraries
         run: arduino-cli compile --profile host generator/download_lgfx
       - name: Generate metadata and harness table
