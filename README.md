@@ -9,6 +9,8 @@ The site is generated from a pinned LovyanGFX release and is intended for GitHub
 Pages. Each font gets a detail page under `docs/fonts/<name>.html`, so another
 tool can link directly by the LovyanGFX font symbol name.
 
+Published site: <https://tanakamasayuki.github.io/LGFXFontCatalog/>
+
 ## What It Shows
 
 - Font name, family, category, script, style, and nominal size
@@ -19,6 +21,12 @@ tool can link directly by the LovyanGFX font symbol name.
 
 The committed `docs/` directory is the Pages output. A metadata-only `docs/`
 site can be generated locally before running the full host probe.
+
+`generator/sketch.yaml` records both the LovyanGFX and M5GFX pins. The current
+generator uses LovyanGFX as the representative catalog; M5GFX is recorded for
+version context only. The download and probe sketches intentionally depend only
+on LovyanGFX, because building LovyanGFX and M5GFX in the same host sketch links
+duplicate LGFX symbols.
 
 ## Repository Layout
 
@@ -70,10 +78,11 @@ font and can take a long time.
 The workflow in `.github/workflows/generate.yml`:
 
 1. Installs Python, Arduino CLI, SDL, and binutils.
-2. Writes the probe font table from pinned LovyanGFX metadata.
-3. Runs the host probe.
-4. Regenerates `docs/` with metrics, coverage, flash sizes, and preview PNGs.
-5. Commits generated changes back with `[skip ci]`.
+2. Builds `generator/download_lgfx` to download the pinned LovyanGFX copy.
+3. Writes the probe font table from pinned LovyanGFX metadata.
+4. Runs the host probe.
+5. Regenerates `docs/` with metrics, coverage, flash sizes, and preview PNGs.
+6. Commits generated changes back with `[skip ci]`.
 
 Configure GitHub Pages to serve from the `docs/` directory.
 

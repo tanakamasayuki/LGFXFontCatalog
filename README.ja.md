@@ -8,6 +8,8 @@ LovyanGFX / M5GFX / M5Unified に同梱されているプリセットフォン�
 `docs/fonts/<name>.html` の詳細ページを持つため、他のツールから LovyanGFX のフォントシンボル名で
 直接リンクできます。
 
+公開サイト: <https://tanakamasayuki.github.io/LGFXFontCatalog/>
+
 ## 表示する情報
 
 - フォント名、ファミリ、カテゴリ、script、スタイル、公称サイズ
@@ -18,6 +20,11 @@ LovyanGFX / M5GFX / M5Unified に同梱されているプリセットフォン�
 
 コミット済みの `docs/` ディレクトリが GitHub Pages の公開物です。full host probe を走らせる前でも、
 メタデータのみの `docs/` サイトをローカル生成できます。
+
+`generator/sketch.yaml` には LovyanGFX と M5GFX のピンを両方記録します。現行 generator は
+LovyanGFX を代表カタログとして使い、M5GFX はバージョン文脈の記録だけに留めます。
+download sketch と probe sketch は意図的に LovyanGFX のみに依存します。LovyanGFX と M5GFX を
+同じ host sketch でビルドすると、LGFX の同名シンボルが重複してリンクエラーになるためです。
 
 ## ディレクトリ構成
 
@@ -67,10 +74,11 @@ LGFX_FONT_CATALOG_LIMIT=2 .venv/bin/python -m pytest generator/font_catalog_prob
 `.github/workflows/generate.yml` の workflow は次を行います。
 
 1. Python、Arduino CLI、SDL、binutils をインストールする。
-2. ピン留めした LovyanGFX メタデータから probe 用 font table を生成する。
-3. host probe を実行する。
-4. メトリクス、coverage、flash サイズ、プレビュー PNG を含む `docs/` を再生成する。
-5. 生成差分を `[skip ci]` 付きでコミットする。
+2. `generator/download_lgfx` をビルドし、ピン留めした LovyanGFX をダウンロードする。
+3. ピン留めした LovyanGFX メタデータから probe 用 font table を生成する。
+4. host probe を実行する。
+5. メトリクス、coverage、flash サイズ、プレビュー PNG を含む `docs/` を再生成する。
+6. 生成差分を `[skip ci]` 付きでコミットする。
 
 GitHub Pages は `docs/` ディレクトリを公開元に設定してください。
 

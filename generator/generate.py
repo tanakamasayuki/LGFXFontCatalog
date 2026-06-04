@@ -21,7 +21,6 @@ ROOT = Path(__file__).resolve().parents[1]
 GEN = ROOT / "generator"
 DOCS = ROOT / "docs"
 PROBE = GEN / "font_catalog_probe"
-BOOTSTRAP = GEN / "download_lgfx"
 INTERNAL = Path.home() / ".arduino15" / "internal"
 PIN_SKETCH = GEN / "sketch.yaml"
 
@@ -92,20 +91,25 @@ def ensure_downloaded(version: str) -> None:
     prefix = f"LovyanGFX_{version}_"
     if INTERNAL.exists() and any(d.name.startswith(prefix) for d in INTERNAL.iterdir()):
         return
-    subprocess.run(["arduino-cli", "compile", "--profile", "host", str(BOOTSTRAP)], check=True)
+    raise RuntimeError(
+        f"LovyanGFX {version} was not found under {INTERNAL}. "
+        "Build generator/download_lgfx first to download pinned libraries."
+    )
 
 
 def resolve_header(name: str, version: str) -> Path:
     if not INTERNAL.exists():
-        raise RuntimeError(f"{INTERNAL} does not exist. Install/build the pinned Arduino profile first.")
+        raise RuntimeError(f"{INTERNAL} does not exist. Build generator/download_lgfx first.")
     prefix = f"{name}_{version}_"
     dirs = sorted(d for d in INTERNAL.iterdir() if d.name.startswith(prefix))
     if not dirs:
-        raise RuntimeError(f"{name} {version} was not found under {INTERNAL}")
+        raise RuntimeError(f"{name} {version} was not found under {INTERNAL}. Build generator/download_lgfx first.")
     header = dirs[0] / name / "src" / "lgfx" / "v1" / "lgfx_fonts.hpp"
-    if not header.exists():
-        raise RuntimeError(f"{header} missing")
-    return header
+    if header.exists():
+        return header
+    raise RuntimeError(
+        f"{header} missing. Build generator/download_lgfx first to download pinned libraries."
+    )
 
 
 def parse_fonts(header: Path) -> list[tuple[str, str]]:
