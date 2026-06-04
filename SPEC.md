@@ -91,7 +91,7 @@ committed output.
 
 - **Workflow**: checkout → install toolchain (arduino-cli + host core, SDL deps,
   Python/Pillow, binutils for `nm`) → fetch the pinned LovyanGFX → run the generator
-  (§3.2) → produce the published directory (`fonts/*.html`, `index.html`, `data/*.json`,
+  (§3.2) → produce the `docs/` published directory (`fonts/*.html`, `index.html`, `data/*.json`,
   `assets/*`) → **commit & push if there is a diff**.
 - **Triggers**: manual (`workflow_dispatch`) as the baseline. May also run on push to the
   pinned-version file or to the generator (`generator/`). No scheduled runs needed since it
@@ -204,14 +204,15 @@ LGFXFontCatalog/
   NOTICE                    # attribution (§8)
   .github/workflows/        # generate-and-commit GitHub Actions (§3.4)
   generator/                # offline generator (self-contained)
-  site/ (or docs/)          # GitHub Pages output (committed by Actions)
+  docs/                     # GitHub Pages output (committed by Actions)
     index.html              # index (search / filter)
     fonts/<name>.html       # font detail (covered chars baked in)
     data/index.json         # lightweight data for the index
     assets/...              # preview images, etc.
 ```
-The published directory (`docs/` vs `site/` vs a `gh-pages` branch) is finalized at
-implementation time per the GitHub Pages setting (artifact-commit policy in §3.4).
+GitHub Pages serves from `docs/`. See §3.4 for the artifact-commit policy. If preview
+PNGs or other generated assets make the repository too large, a future split to a
+`gh-pages` branch can be considered.
 
 ## 8. License & attribution
 

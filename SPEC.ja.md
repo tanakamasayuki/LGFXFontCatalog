@@ -82,7 +82,7 @@ self-contained で、LGFXScreenBuilder には依存しない（§3）。
 
 - **ワークフロー処理**: チェックアウト → ツールチェイン導入（arduino-cli ＋ host コア、
   SDL 等の依存、Python/Pillow、`nm` 用 binutils）→ ピン留め LovyanGFX 取得 →
-  生成器を実行（§3.2）→ 公開ディレクトリ（`fonts/*.html`・`index.html`・`data/*.json`・
+  生成器を実行（§3.2）→ `docs/` 公開ディレクトリ（`fonts/*.html`・`index.html`・`data/*.json`・
   `assets/*`）を生成 → **差分があればコミット＆プッシュ**。
 - **トリガ**: 手動（`workflow_dispatch`）を基本。加えてピン留めバージョンを書いたファイルや
   生成器（`generator/`）への push でも走らせてよい。「あまり更新しない」ので定期実行は不要。
@@ -184,14 +184,14 @@ LGFXFontCatalog/
   NOTICE                    # 帰属（§8）
   .github/workflows/        # 生成＆コミットの GitHub Actions（§3.4）
   generator/                # オフライン生成器（self-contained）
-  site/ (or docs/)          # GitHub Pages 公開物（Actions がコミット）
+  docs/                     # GitHub Pages 公開物（Actions がコミット）
     index.html              # インデックス（検索・フィルタ）
     fonts/<name>.html       # フォント詳細（収録文字を焼き込み）
     data/index.json         # インデックス用軽量データ
     assets/...              # プレビュー画像など
 ```
-公開ディレクトリ（`docs/` か `site/` か `gh-pages` ブランチか）は GitHub Pages 設定に
-合わせて実装時に確定する（生成物コミット方針は §3.4）。
+GitHub Pages は `docs/` を公開元にする。生成物コミット方針は §3.4。プレビュー PNG などで
+リポジトリが肥大する場合のみ、将来 `gh-pages` ブランチへの分離を検討する。
 
 ## 8. ライセンス・帰属
 
