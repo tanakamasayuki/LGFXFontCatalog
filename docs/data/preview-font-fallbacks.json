@@ -1,0 +1,160 @@
+{
+  "DejaVu": {
+    "previewKind": "sans",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"DejaVu Sans\", \"Noto Sans\", \"Arial\", sans-serif",
+    "notes": "DejaVu family. Use DejaVu Sans directly if bundled as a webfont; otherwise Noto Sans or Arial is a practical sans fallback."
+  },
+  "FreeMono": {
+    "previewKind": "mono",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Cousine\", \"Roboto Mono\", \"Courier New\", monospace",
+    "notes": "FreeMono is a GNU FreeFont monospace face. Cousine is metrically close to Courier-style screen use; Roboto Mono is a common web fallback."
+  },
+  "FreeSans": {
+    "previewKind": "sans",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Arimo\", \"Noto Sans\", \"Arial\", sans-serif",
+    "notes": "FreeSans is a GNU FreeFont sans face in the Helvetica/Arial style. Arimo is a practical webfont fallback."
+  },
+  "FreeSerif": {
+    "previewKind": "serif",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Tinos\", \"Noto Serif\", \"Times New Roman\", serif",
+    "notes": "FreeSerif is a GNU FreeFont serif face in the Times style. Tinos is a practical webfont fallback."
+  },
+  "Orbitron_Light": {
+    "previewKind": "geometric_display",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Orbitron\", sans-serif",
+    "fontWeight": 300,
+    "notes": "Named Orbitron Light. Use the Orbitron webfont with a light weight."
+  },
+  "Roboto_Thin": {
+    "previewKind": "sans_thin",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Roboto\", sans-serif",
+    "fontWeight": 100,
+    "notes": "Named Roboto Thin. Use the Roboto webfont with weight 100."
+  },
+  "Satisfy": {
+    "previewKind": "script",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Satisfy\", cursive",
+    "notes": "Named Satisfy. Use the matching Satisfy webfont."
+  },
+  "Yellowtail": {
+    "previewKind": "script",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Yellowtail\", cursive",
+    "notes": "Named Yellowtail. Use the matching Yellowtail webfont."
+  },
+  "efontCN": {
+    "previewKind": "cjk_sans_bitmap",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Sans SC\", \"Microsoft YaHei\", sans-serif",
+    "notes": "efont Simplified Chinese bitmap family. Noto Sans SC approximates script coverage, but not the bitmap texture."
+  },
+  "efontJA": {
+    "previewKind": "cjk_sans_bitmap",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Sans JP\", \"M PLUS 1p\", sans-serif",
+    "notes": "efont Japanese bitmap family. Noto Sans JP or M PLUS 1p approximates script coverage, but not the bitmap texture."
+  },
+  "efontKR": {
+    "previewKind": "cjk_sans_bitmap",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Sans KR\", \"Malgun Gothic\", sans-serif",
+    "notes": "efont Korean bitmap family. Noto Sans KR approximates script coverage, but not the bitmap texture."
+  },
+  "efontTW": {
+    "previewKind": "cjk_sans_bitmap",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Sans TC\", \"Microsoft JhengHei\", sans-serif",
+    "notes": "efont Traditional Chinese bitmap family. Noto Sans TC approximates script coverage, but not the bitmap texture."
+  },
+  "lgfxJapanGothic": {
+    "previewKind": "ja_gothic",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"M PLUS 1p\", \"Noto Sans JP\", sans-serif",
+    "notes": "LovyanGFX Japanese Gothic family. M PLUS 1p is a close practical webfont candidate; Noto Sans JP is a robust fallback."
+  },
+  "lgfxJapanGothicP": {
+    "previewKind": "ja_gothic_proportional",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"M PLUS 1p\", \"Noto Sans JP\", sans-serif",
+    "notes": "Proportional variant of LovyanGFX Japanese Gothic. Use the same webfont stack as lgfxJapanGothic."
+  },
+  "lgfxJapanMincho": {
+    "previewKind": "ja_mincho",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Serif JP\", \"Yu Mincho\", serif",
+    "notes": "LovyanGFX Japanese Mincho family. Noto Serif JP is the safest webfont fallback."
+  },
+  "lgfxJapanMinchoP": {
+    "previewKind": "ja_mincho_proportional",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Noto Serif JP\", \"Yu Mincho\", serif",
+    "notes": "Proportional variant of LovyanGFX Japanese Mincho. Use the same webfont stack as lgfxJapanMincho."
+  },
+  "Font0": {
+    "previewKind": "bitmap_sans",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Pixelify Sans\", \"DotGothic16\", monospace",
+    "notes": "Small 6x8 GLCD-style bitmap sans. Use a pixel font fallback; exact origin is not identified from the family name."
+  },
+  "Font2": {
+    "previewKind": "bitmap_sans",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Pixelify Sans\", \"DotGothic16\", monospace",
+    "notes": "Larger proportional bitmap sans. Similar visual role to a small embedded LCD UI font."
+  },
+  "Font4": {
+    "previewKind": "bitmap_sans",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Pixelify Sans\", \"DotGothic16\", monospace",
+    "notes": "Large proportional bitmap sans. Pixel-style web fonts approximate the texture, but not the exact glyph design."
+  },
+  "Font6": {
+    "previewKind": "lcd_digits",
+    "recommendedRenderer": "sevenSegmentCanvas",
+    "cssFontFamily": "\"DSEG7 Classic\", \"DSEG7Classic\", monospace",
+    "notes": "LovyanGFX source says Font 6 is intended to display numbers and time. It contains space, digits, colon, minus, period, a/p/m, and pipe as narrow space. The image is rounded LCD-style, so custom canvas rendering is closer than a generic text font."
+  },
+  "Font7": {
+    "previewKind": "seven_segment_digits",
+    "recommendedRenderer": "sevenSegmentCanvas",
+    "cssFontFamily": "\"DSEG7 Classic\", \"DSEG7Classic\", monospace",
+    "notes": "LovyanGFX source identifies this as a 7-segment font intended for numbers and time. DSEG7 Classic is the closest practical webfont fallback."
+  },
+  "Font8": {
+    "previewKind": "large_sans_digits",
+    "recommendedRenderer": "webFont",
+    "cssFontFamily": "\"Arial\", \"Helvetica Neue\", sans-serif",
+    "notes": "LovyanGFX source describes this as an Arial 75 pixel height font intended to display large numbers."
+  },
+  "Font8x8C64": {
+    "previewKind": "c64_bitmap",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"C64 Pro Mono\", \"Pixelify Sans\", monospace",
+    "notes": "LovyanGFX source cites https://github.com/hugovangalen/C64_Font8x8 as the original source. Prefer a C64-style bitmap webfont fallback when available."
+  },
+  "AsciiFont8x16": {
+    "previewKind": "fixed_bitmap_sans",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Web437 IBM VGA 8x16\", \"Perfect DOS VGA 437\", monospace",
+    "notes": "Fixed 8x16 ASCII bitmap. VGA/DOS terminal-style fonts are closer than modern monospace fonts."
+  },
+  "AsciiFont24x48": {
+    "previewKind": "fixed_bitmap_sans",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Web437 IBM VGA 8x16\", \"Perfect DOS VGA 437\", monospace",
+    "notes": "Fixed 24x48 ASCII bitmap. Treat as a scaled terminal bitmap face."
+  },
+  "TomThumb": {
+    "previewKind": "tiny_bitmap_serif",
+    "recommendedRenderer": "pixelWebFont",
+    "cssFontFamily": "\"Tom Thumb\", \"Pixelify Sans\", monospace",
+    "notes": "Known TomThumb GFX font. If licensing and packaging are acceptable, using TomThumb itself as a webfont gives the closest preview."
+  }
+}
